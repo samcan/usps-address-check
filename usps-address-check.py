@@ -29,16 +29,21 @@ def main(args):
 
 	# check that either city/state, state/zip, or city/zip are specified, else
 	# don't check and return an error message
-	if is_missing_city_state_zip(args.city, args.state, args.zip):
+	if is_missing_city_state_zip(payload['city'], payload['state'], payload['zip']):
 		print('ERROR: Please specify either city and state, state and zip, or city and zip.')
 		return
 
+	usps_response = lookup_address(payload, timeout)
+	if usps_response != None:
+		print(usps_response.json())
+
+def lookup_address(address_dict, timeout):
+	assert not is_missing_city_state_zip(address_dict['city'], address_dict['state'], address_dict['zip']), "Need city/state, state/zip, or city/zip specified!"
 	try:
-		r = requests.post(USPS_URL, headers=HEADERS, data=payload, timeout=timeout)
-		print(r.json())
+		r = requests.post(USPS_URL, headers=HEADERS, data=address_dict, timeout=timeout)
+		return r
 	except requests.exceptions.ReadTimeout as e:
 		print('Timeout contacting usps.com')
-
 
 def is_missing_city_state_zip(city, state, zip):
 	# check that either city/state, state/zip, or city/zip are specified
