@@ -43,3 +43,6 @@ The response to the request is as follows:
 to make an address match.
 * `ADDRESS NOT FOUND`. USPS didn't have enough address data to make a match.
 * `INVALID-CITY`. An invalid city was given and USPS didn't have enough data to make a match.
+
+The API (at least, as exposed through the form) needs either city/state, state/zip, or city/zip
+specified. If none of those combinations are specified, don't make the API call.
