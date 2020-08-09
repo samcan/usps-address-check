@@ -27,13 +27,30 @@ def main(args):
 	else:
 		timeout = TIMEOUT
 
+	# check that either city/state, state/zip, or city/zip are specified, else
+	# don't check and return an error message
+	if is_missing_city_state_zip(args.city, args.state, args.zip):
+		print('ERROR: Please specify either city and state, state and zip, or city and zip.')
+		return
+
 	try:
 		r = requests.post(USPS_URL, headers=HEADERS, data=payload, timeout=timeout)
 		print(r.json())
 	except requests.exceptions.ReadTimeout as e:
 		print('Timeout contacting usps.com')
-	
 
+
+def is_missing_city_state_zip(city, state, zip):
+	# check that either city/state, state/zip, or city/zip are specified
+	err_missing_value = False
+	if city == None and not (state != None and zip != None):
+		err_missing_value = True
+	elif state == None and not (city != None and zip != None):
+		err_missing_value = True
+	elif zip == None and not (city != None and state != None):
+		err_missing_value = True
+	
+	return err_missing_value
 
 def setup_argument_parser():
 	parser = argparse.ArgumentParser(description='Lookup a US address at USPS.com')
