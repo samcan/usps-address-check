@@ -8,7 +8,7 @@ HEADERS = {
 }
 
 USPS_URL = 'https://tools.usps.com/tools/app/ziplookup/zipByAddress'
-TIMEOUT = 10
+TIMEOUT = 30
 
 def main(args):
 	# TODO replace spaces with + symbols
@@ -21,8 +21,18 @@ def main(args):
 				'zip': args.zip
 				}
 
-	r = requests.post(USPS_URL, headers=HEADERS, data=payload, timeout=TIMEOUT)
-	print(r.json())
+	# set default timeout if none is specified
+	if args.timeout != None:
+		timeout = args.timeout
+	else:
+		timeout = TIMEOUT
+
+	try:
+		r = requests.post(USPS_URL, headers=HEADERS, data=payload, timeout=timeout)
+		print(r.json())
+	except requests.exceptions.ReadTimeout as e:
+		print('Timeout contacting usps.com')
+	
 
 
 def setup_argument_parser():
@@ -34,6 +44,7 @@ def setup_argument_parser():
 	parser.add_argument('--state', type=str)
 	parser.add_argument('--urbanCode', type=str)
 	parser.add_argument('--zip', type=str)
+	parser.add_argument('--timeout', type=float, help='Timeout (default of ' + str(TIMEOUT) + ' secs)')
 	return parser
 
 if __name__ == '__main__':
