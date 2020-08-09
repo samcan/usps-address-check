@@ -59,7 +59,7 @@ def setup_argument_parser():
 	parser.add_argument('--address2', type=str)
 	parser.add_argument('--city', type=str)
 	parser.add_argument('--state', type=str)
-	parser.add_argument('--urbanCode', type=str)
+	parser.add_argument('--urbanCode', type=str, help='Urbanization Code (only applies to Puerto Rico)')
 	parser.add_argument('--zip', type=str)
 	parser.add_argument('--timeout', type=float, help='Timeout (default of ' + str(TIMEOUT) + ' secs)')
 	return parser
