@@ -8,7 +8,7 @@ HEADERS = {
 }
 
 USPS_URL = 'https://tools.usps.com/tools/app/ziplookup/zipByAddress'
-TIMEOUT = 0.1
+TIMEOUT = 10
 
 def main(args):
 	# TODO replace spaces with + symbols
