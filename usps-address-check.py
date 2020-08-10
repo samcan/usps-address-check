@@ -11,7 +11,9 @@ USPS_URL = 'https://tools.usps.com/tools/app/ziplookup/zipByAddress'
 TIMEOUT = 30
 
 def main(args):
-	# TODO replace spaces with + symbols
+	# Note that we don't need to replace spaces with pluses in the data passed
+	# in the URL. I tried converting the spaces, and the USPS website didn't
+	# like that.
 	payload = { 'companyName': args.company,
 				'address1': args.address1,
 				'address2': args.address2,
