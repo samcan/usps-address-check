@@ -10,7 +10,7 @@ HEADERS = {
 }
 
 USPS_URL = 'https://tools.usps.com/tools/app/ziplookup/zipByAddress'
-TIMEOUT = 30
+TIMEOUT = 1
 
 OUTPUT_HEADER_ROW = ['Address', 'City', 'State', 'Zip', 'Urban Code']
 
@@ -113,7 +113,7 @@ def setup_argument_parser():
 	parser.add_argument('--state', type=str)
 	parser.add_argument('--urbanCode', type=str, help='Urbanization Code (only applies to Puerto Rico)')
 	parser.add_argument('--zip', type=str)
-	parser.add_argument('--timeout', type=float, help='Timeout (default of ' + str(TIMEOUT) + ' secs)')
+	parser.add_argument('--timeout', type=float, help='Timeout (default of ' + str(TIMEOUT) + ' sec[s])')
 	return parser
 
 if __name__ == '__main__':
